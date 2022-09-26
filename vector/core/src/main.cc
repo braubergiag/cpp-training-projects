@@ -8,11 +8,8 @@
 
 int main(){
 
-    const Vector<int> v{1,2,3,4};
-    const std::vector<int> vv{1,2,3,4};
+    Vector<int> v{1,2,3,4}, v2{3,4,5,6};
 
-
-
-    std::cout << v.front();
+    v2=  v;
     return 0;
 }
