@@ -34,3 +34,24 @@ TEST(ConstructorsTest,InitListCtr){
 }
 
 
+TEST(VectorAccess,Front){
+    Vector<int> v{1,2,3};
+    Vector<int> cv{1,2,3};
+
+    v.front() = 5;
+    
+    ASSERT_EQ(v.front(),5);
+    ASSERT_EQ(cv.front(),1);
+
+}
+
+
+TEST(VectorAccess,Back){
+    Vector<int> v{1,2,3};
+    Vector<int> cv{1,2,3};
+
+    v.back() = 5;
+    
+    ASSERT_EQ(v.back(),5);
+    ASSERT_EQ(cv.back(),3);
+}

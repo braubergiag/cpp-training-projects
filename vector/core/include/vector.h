@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <stdexcept>
 #include <tuple>
-
+#include <utility>
 
 
 template <typename T>
@@ -15,16 +15,21 @@ struct Vector {
     Vector(size_t n = 0);
     Vector(size_t n,const T & default_val);
     Vector(std::initializer_list<T> values);
+    ~Vector();
 
     size_t size();
+
 
     T & operator[](int i);
     const T & at(int i);
 
+    // Selectors
 
+    T& front();
+    const T& front() const;
 
-    ~Vector();
-
+    T& back();
+    const T& back() const;
 
     private:
         size_t size_;
@@ -43,7 +48,6 @@ Vector<T>::Vector(std::initializer_list<T> values) : Vector(values.size())
         vec_[i] = *it;
     }
 }
-
 template<typename T>
 Vector<T>::Vector(size_t n,const T & default_val) : Vector(n)
 {
@@ -51,7 +55,33 @@ Vector<T>::Vector(size_t n,const T & default_val) : Vector(n)
     {
         vec_[i] = default_val;
     }
+};
+// https://en.cppreference.com/w/cpp/container/vector/front
+// https://stackoverflow.com/questions/123758/how-do-i-remove-code-duplication-between-similar-const-and-non-const-member-func
+// Marc Gregoire p.310
+template<typename T>
+T& Vector<T>::front(){
+    return const_cast<T&>(std::as_const(*this).front());
 }
+
+
+template<typename T>
+const T& Vector<T>::front() const{
+    return vec_[0];
+}
+
+
+// https://en.cppreference.com/w/cpp/container/vector/back
+template<typename T>
+T& Vector<T>::back(){
+    return const_cast<T&>(std::as_const(*this).back());
+}
+
+template<typename T>
+const T& Vector<T>::back() const {
+    return vec_[size_ - 1];
+}
+
 
 template<typename T>
 size_t Vector<T>::size()
