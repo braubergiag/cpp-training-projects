@@ -8,5 +8,6 @@ class Matrix {
 
 
 
-
+    private:
+        T ** mat_;
 };
