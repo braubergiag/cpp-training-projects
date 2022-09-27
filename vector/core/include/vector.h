@@ -7,6 +7,7 @@
 #include <utility>
 #include <algorithm>
 #include <iostream>
+#include <memory>
 template <typename T>
 struct Vector {
     
@@ -23,34 +24,37 @@ struct Vector {
 
 
 
-    explicit Vector(size_t n = 0);
-    Vector(size_t n,const T & default_val);
-    Vector(std::initializer_list<T> values);
-    Vector(const Vector<T> &);
-    Vector<T>& operator=(const Vector<T>&);
-    ~Vector();
+    Vector() {create();};
+    explicit Vector(size_t n,const T & default_val = T()) {create(n,default_val);};
+    Vector(const std::initializer_list<T> &  values) {
+      create(values.begin(),values.end());
+    }
+    Vector(const Vector<T> & v) {create(v.begin(),v.end());};
+    Vector<T>& operator=(const Vector<T>& rhs){
+        if (this != &rhs)
+        {
+            uncreate();
+            create(rhs.begin(),rhs.end());
+        }
+        return *this;
+    };
+    ~Vector() { uncreate();};
 
-    size_t size() const {return size_;};
+    size_t size() const {return limit_ - data_;};
 
 
-    T & operator[](int i) {return vec_[i];};
-    const T& operator[](int i) const {return vec_[i];};
+    T & operator[](int i) {return data_[i];};
+    const T& operator[](int i) const {return data_[i];};
     const T & at(int i);
 
-    
-    void swap(Vector<T> &) noexcept;
 
-    void resize(size_t n);
+    T& front() {return data_[0];};
+    const T& front() const {return data_[0];};
 
-
-    T& front() {return vec_[0];};
-    const T& front() const {return vec_[0];};
-
-    T& back() {return vec_[size_- 1];};
-    const T& back() const {return vec_[size_ -1];};
+    T& back() {return data_[size() - 1];};
+    const T& back() const {return data_[size() - 1];};
 
     void push_back(const T& val);
-    void grow();
 
     const_iterator begin() const { return data_;};
     iterator begin() { return data_;};
@@ -58,116 +62,30 @@ struct Vector {
     const_iterator end() const { return limit_;};
     iterator end() {return limit_;};
 
-    private:
-        const static size_t inc_rate_{2};
-        size_t size_;
-        size_t cap_;
-public:
-    size_t getCap() const;
-
 private:
-        T* vec_;
-        iterator data_;
-        iterator avail_;
-        iterator limit_;
+    void create();
+    void create(size_type, const T&);
+
+    void create(const_iterator,const_iterator);
+    void uncreate();
+
+    void grow();
+
+    void unchecked_append(const T&);
+private:
+
+    iterator data_;
+    iterator avail_;
+    iterator limit_;
+    std::allocator<T> alloc_;
 };
-
-
-template<typename T>
-Vector<T>::Vector(size_t n) : size_(n),cap_(n * inc_rate_), vec_(new T[n * inc_rate_]){
-    std::cout << "ctr 1\n";
-};
-template<typename T>
-Vector<T>::Vector(std::initializer_list<T> values) : Vector(values.size())
-{
-    std::cout << "ctr 2\n";
-    for (auto [it, i] = std::tuple(values.begin(), 0); it != values.end() && i < size_; ++it,++i)
-    {
-        vec_[i] = *it;
-    }
-}
-template<typename T>
-Vector<T>::Vector(size_t n,const T & default_val) : Vector(n)
-{
-    for (auto i{0}; i < size_; ++i)
-    {
-        vec_[i] = default_val;
-    }
-};
-
-//Copy ctr
-template<typename T>
-Vector<T>::Vector(const Vector & v) : Vector(v.size())
-{
-    std::cout << "copy ctr\n";
-    for (auto i{0}; i < v.size(); ++i)
-    {
-        vec_[i] = v[i];
-    }
-}
-
-// Copy assignment
-template<typename T>
-Vector<T>& Vector<T>::operator=(const Vector& rhs) {
-    std::cout << "copy assign\n";
-    // Check for (this != &rhs ) not required. If we will make a = a, then we just create another copy
-    Vector temp(rhs);
-    swap(temp);
-    return *this;
-};
-
-template<typename T>
-void Vector<T>::swap(Vector & other) noexcept {
-
-    std::swap(size_, other.size_);
-    std::swap(vec_,other.vec_);
-}
-
-template<typename T>
-void swap(Vector<T> & first,Vector<T> & second) noexcept {
-    first.swap(second);
-}
-
-
-template<typename T>
-void Vector<T>::resize(size_t n){
-
-    cap_ *= inc_rate_;
-    T * data = new T[cap_];
-    for (auto i{0}; i < std::min(size_,n); ++i)
-    {
-        data[i] = vec_[i];
-    }
-    if (n > size_)
-    {
-        for (auto i{size_}; i < n; ++i)
-        {
-            data[i] = T();
-        }   
-    }
-    delete[] vec_;
-    vec_ = data;
-    size_ = n;
-
-}
-
-
-
-
-template<typename T>
-Vector<T>::~Vector()
-{
-    delete[] vec_;
-};
-
-
 
 
 
 template<typename T>
 const T& Vector<T>::at(int i){
-    if (i > 0 && i < size_) {
-        return vec_[i];
+    if (i > 0 && i < size()) {
+        return data_[i];
     }
 
     throw std::domain_error("Out of range");
@@ -175,24 +93,60 @@ const T& Vector<T>::at(int i){
 
 template<typename T>
 void Vector<T>::push_back(const T &val) {
-    if (size_ == cap_)
+    if (avail_ == limit_)
     {
-        resize(size_);
+        grow();
     }
-
-    vec_[size_++] = val;
-
+    unchecked_append(val);
 
 }
 
 template<typename T>
-size_t Vector<T>::getCap() const {
-    return cap_;
+void Vector<T>::create() {
+    data_ = avail_ = limit_ = 0;
+}
+
+template<typename T>
+void Vector<T>::create(Vector::size_type n, const T & val) {
+    data_ = alloc_.allocate(n);
+    limit_ = avail_ = data_ + n;
+    std::uninitialized_fill(data_,limit_,val);
+}
+
+template<typename T>
+void Vector<T>::create(Vector::const_iterator i, Vector::const_iterator j) {
+    data_ = alloc_.allocate(j - i);
+    limit_ = avail_ = std::uninitialized_copy(i,j,data_);
+}
+
+template<typename T>
+void Vector<T>::uncreate() {
+    if (data_)
+    {
+        iterator it = avail_;
+        while (it != data_)
+        {
+            alloc_.destroy(--it);
+        }
+        alloc_.deallocate(data_,limit_ - data_);
+    }
+    data_ = avail_ = limit_;
 }
 
 template<typename T>
 void Vector<T>::grow() {
+    size_type new_size = std::max(2 * (limit_ - data_), std::ptrdiff_t(1));
 
-    cap_ *= inc_rate_;
-    resize(cap_);
+    iterator new_data = alloc_.allocate(new_size);
+    iterator  new_avail = std::uninitialized_copy(data_,avail_,new_data);
+
+    uncreate();
+    data_ = new_data;
+    avail_ = new_avail;
+    limit_ = data_ + new_size;
+}
+
+template<typename T>
+void Vector<T>::unchecked_append(const T & val) {
+    alloc_.construct(avail_++,val);
 }
