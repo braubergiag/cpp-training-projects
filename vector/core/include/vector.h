@@ -49,6 +49,8 @@ struct Vector {
     T& back() {return vec_[size_- 1];};
     const T& back() const {return vec_[size_ -1];};
 
+    void push_back(const T& val);
+    void grow();
 
     const_iterator begin() const { return data_;};
     iterator begin() { return data_;};
@@ -57,15 +59,22 @@ struct Vector {
     iterator end() {return limit_;};
 
     private:
+        const static size_t inc_rate_{2};
         size_t size_;
-        T * vec_;
+        size_t cap_;
+public:
+    size_t getCap() const;
+
+private:
+        T* vec_;
         iterator data_;
+        iterator avail_;
         iterator limit_;
 };
 
 
 template<typename T>
-Vector<T>::Vector(size_t n) : size_(n), vec_(new T[n]){
+Vector<T>::Vector(size_t n) : size_(n),cap_(n * inc_rate_), vec_(new T[n * inc_rate_]){
     std::cout << "ctr 1\n";
 };
 template<typename T>
@@ -123,7 +132,8 @@ void swap(Vector<T> & first,Vector<T> & second) noexcept {
 template<typename T>
 void Vector<T>::resize(size_t n){
 
-    T * data = new T[n];
+    cap_ *= inc_rate_;
+    T * data = new T[cap_];
     for (auto i{0}; i < std::min(size_,n); ++i)
     {
         data[i] = vec_[i];
@@ -138,6 +148,7 @@ void Vector<T>::resize(size_t n){
     delete[] vec_;
     vec_ = data;
     size_ = n;
+
 }
 
 
@@ -160,4 +171,28 @@ const T& Vector<T>::at(int i){
     }
 
     throw std::domain_error("Out of range");
+}
+
+template<typename T>
+void Vector<T>::push_back(const T &val) {
+    if (size_ == cap_)
+    {
+        resize(size_);
+    }
+
+    vec_[size_++] = val;
+
+
+}
+
+template<typename T>
+size_t Vector<T>::getCap() const {
+    return cap_;
+}
+
+template<typename T>
+void Vector<T>::grow() {
+
+    cap_ *= inc_rate_;
+    resize(cap_);
 }

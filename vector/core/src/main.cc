@@ -8,13 +8,16 @@
 
 int main(){
 
-    Vector<int> v{1,2,3,4,5,6,7}, v2{3,4,5,6};
+    Vector<int> v{1,2}, v2{3,4,5,6};
 
 
-    v.resize(35);
-    for (auto i{0};  i < v.size(); ++i)
+
+    v.push_back(20);
+    std::cout << "Current size/ capacity: " << v.size() << " " << v.getCap() <<  "\n";
+    for (auto i{0};  i < 1000; ++i)
     {
-        std::cout << v[i] << " ";
+        v.push_back(20);
+        std::cout << "Current size/ capacity: " << v.size() << " " << v.getCap() <<  "\n";
     }
 
     return 0;
