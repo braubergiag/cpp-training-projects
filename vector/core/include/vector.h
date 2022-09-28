@@ -40,8 +40,8 @@ struct Vector {
     };
     ~Vector() { uncreate();};
 
-    size_t size() const {return limit_ - data_;};
-
+    [[nodiscard]] size_type size() const {return avail_ - data_;};
+    [[nodiscard]] size_type capacity() const {return limit_ - data_;}
 
     T & operator[](int i) {return data_[i];};
     const T& operator[](int i) const {return data_[i];};
@@ -55,17 +55,21 @@ struct Vector {
     const T& back() const {return data_[size() - 1];};
 
     void push_back(const T& val);
+    void clear();
+
+    iterator erase(const_iterator pos);
+    iterator erase(const_iterator first, const_iterator last);
 
     const_iterator begin() const { return data_;};
     iterator begin() { return data_;};
 
+
     const_iterator end() const { return limit_;};
     iterator end() {return limit_;};
-
 private:
     void create();
-    void create(size_type, const T&);
 
+    void create(size_type, const T&);
     void create(const_iterator,const_iterator);
     void uncreate();
 
@@ -149,4 +153,27 @@ void Vector<T>::grow() {
 template<typename T>
 void Vector<T>::unchecked_append(const T & val) {
     alloc_.construct(avail_++,val);
+}
+
+template<typename T>
+void Vector<T>::clear() {
+    if (data_)
+    {
+        iterator it = avail_;
+        while (it != data_)
+        {
+            alloc_.destroy(--it);
+        }
+    }
+    avail_ = data_;
+}
+
+template<typename T>
+T * Vector<T>::erase(Vector::const_iterator pos) {
+    return nullptr;
+}
+
+template<typename T>
+T* Vector<T>::erase(Vector::const_iterator first, Vector::const_iterator last) {
+    return nullptr;
 }

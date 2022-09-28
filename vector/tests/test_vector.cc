@@ -55,3 +55,17 @@ TEST(VectorAccess,Back){
     ASSERT_EQ(v.back(),5);
     ASSERT_EQ(cv.back(),3);
 }
+
+
+TEST(VectorOp,Clear){
+    Vector<int> v{1,2,3};
+    v.clear();
+    ASSERT_EQ(v.size(),0);
+    ASSERT_EQ(v.capacity(),3);
+
+
+}
+
+TEST(VectorOp,EraseByPos){
+
+}
