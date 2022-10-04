@@ -7,9 +7,12 @@
 
 int main(){
 
-    Matrix<int> m(10,20);
-    m.fill_zeros();
-    m.print();
+    Matrix<int> *  m = new Matrix<int>(10,20);
+    m->fill_zeros();
+    m->print();
+
+    
+    delete m;
 
 
 
