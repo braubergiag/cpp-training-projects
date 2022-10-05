@@ -11,8 +11,10 @@ int main(){
     m->fill_zeros();
     m->print();
 
-    
+    Matrix<int> * eye = Matrix<int>::eye(5);
+    eye->print();
     delete m;
+    delete eye;
 
 
 

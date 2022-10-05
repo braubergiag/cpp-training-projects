@@ -15,7 +15,8 @@ public:
    
     void print();
     void fill_zeros();
-
+    void fill_eye(int dim);
+    static Matrix * eye(int dim);
 
     private:
             T ** mat_;
@@ -29,6 +30,27 @@ public:
 
 };
 
+
+template <typename T> Matrix<T> *  Matrix<T>::eye(int dim){
+
+
+
+}
+
+template <typename T> void Matrix<T>::fill_eye(int dim){
+
+    for (size_t row_idx = 0; row_idx < rows_; row_idx++)
+    {
+        for (size_t cols_idx = 0; cols_idx < cols_; cols_idx++)
+        {
+            if (row_idx == cols_idx) {
+                mat_[row_idx][cols_idx] = 1;
+
+            }
+        }
+
+    }
+}
 
 template <typename T> T ** Matrix<T>::allocate(int rows, int cols) {
             T ** m = new T * [rows];
