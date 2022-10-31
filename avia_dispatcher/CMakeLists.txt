@@ -1,7 +1,7 @@
 project(avia_dispatcher)
 
 
-add_executable(${PROJECT_NAME} core/src/main.cc)
+add_executable(${PROJECT_NAME} core/src/main.cc core/include/flight.cpp core/include/flight.h)
 
 include(FetchContent)
 FetchContent_Declare(

@@ -1,0 +1,5 @@
+if(EXISTS "/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/tests[1]_tests.cmake")
+  include("/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/tests[1]_tests.cmake")
+else()
+  add_test(tests_NOT_BUILT tests_NOT_BUILT)
+endif()

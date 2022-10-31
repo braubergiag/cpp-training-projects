@@ -1,0 +1,21 @@
+# ninja log v5
+0	45	1667223446942142335	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	8623ea9bbf0c07eb
+17361	17365	1667223464262389700	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	2f630824ea975274
+17386	17395	1667223464290390100	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	71232305e8c2d9e4
+17351	17356	1667223464254389586	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	1ee153b4d2381438
+17370	17381	1667223464278389929	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	23773c61bffb8822
+17356	17361	1667223464258389643	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	d9c7108c2081cacd
+46	17351	1667223464246389471	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	8712d281f4670819
+17386	17395	1667223464290390100	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	71232305e8c2d9e4
+17382	17386	1667223464282389986	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	66479b0b0707a832
+17386	17395	1667223464290390100	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/CMakeFiles/googletest-populate-complete	71232305e8c2d9e4
+17370	17381	1667223464278389929	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	23773c61bffb8822
+17386	17395	1667223464290390100	CMakeFiles/googletest-populate-complete	71232305e8c2d9e4
+0	45	1667223446942142335	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	8623ea9bbf0c07eb
+17361	17365	1667223464262389700	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	2f630824ea975274
+17365	17370	1667223464266389757	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	9f88330e41e890cf
+17382	17386	1667223464282389986	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	66479b0b0707a832
+17356	17361	1667223464258389643	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	d9c7108c2081cacd
+46	17351	1667223464246389471	/home/igor/Programming/C++/training/projects/avia_dispatcher/cmake-build-debug/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	8712d281f4670819
+17351	17356	1667223464254389586	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	1ee153b4d2381438
+17365	17370	1667223464266389757	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	9f88330e41e890cf
