@@ -1,0 +1,3 @@
+/home/igor/Programming/C++/training/projects/vector_cv/cmake-build-debug/CMakeFiles/vector_cv.dir
+/home/igor/Programming/C++/training/projects/vector_cv/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/igor/Programming/C++/training/projects/vector_cv/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -77,6 +77,8 @@ typedef struct {
   VectorFreeFunction freeFn;
 } vector;
 
+
+static void VectorGrow(vector * v);
 /** 
  * Function: VectorNew
  * Usage: vector myFriends;
