@@ -1,6 +1,0 @@
-# ninja log v5
-0	34	1667595965883441764	build.ninja	a57c9345ab53adfd
-0	41	1667576895839267871	CMakeFiles/vector_cv.dir/src/main.c.o	b50a4a80e0319bc6
-268	301	1667576966239964226	vector_cv	46e929a87230b3ea
-1	267	1667576966207963906	CMakeFiles/vector_cv.dir/src/vectortest.c.o	1624a5622b1cfb21
-0	63	1667576317118417025	CMakeFiles/vector_cv.dir/src/vector.c.o	571f177af685c355
