@@ -1,1 +1,0 @@
-/usr/bin/c++ -rdynamic CMakeFiles/tests.dir/tests/test_flight.o -o tests  lib/libgtest_main.a lib/libgtest.a 
