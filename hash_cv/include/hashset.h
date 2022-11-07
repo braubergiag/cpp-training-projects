@@ -81,7 +81,6 @@ typedef struct {
     HashSetHashFunction hashFn;
     HashSetCompareFunction  compareFn;
     HashSetFreeFunction freeFn;
-    HashSetMapFunction mapFn;
 } hashset;
 
 /**

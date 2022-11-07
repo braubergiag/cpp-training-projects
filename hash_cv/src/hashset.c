@@ -45,10 +45,8 @@ void HashSetMap(hashset *h, HashSetMapFunction mapfn, void *auxData)
 {
 
     for (int i = 0; i < h->numberOfBuckets; ++i){
-
+        VectorMap(VectorNth(&h->buckets,i),mapfn,auxData);
     }
-
-
 }
 
 void HashSetEnter(hashset *h, const void *elemAddr)

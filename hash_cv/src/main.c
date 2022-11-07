@@ -1,6 +1,7 @@
 
 #include <memory.h>
 #include <assert.h>
+#include <stdio.h>
 #include "../include/hashset.h"
 
 int hash_number(const void * num, int numBuckets) {
@@ -83,6 +84,33 @@ void TEST_HashSetLookUp(){
     HashSetDispose(&h);
 }
 
+void addNumber(int * elemAddr, int * auxData){
+    if (elemAddr != NULL && auxData != NULL){
+       *elemAddr += * auxData;
+
+    }
+}
+
+void TEST_HashSetMapFn(){
+    hashset h;
+
+    HashSetNew(&h,sizeof(int),10, hash_number, hash_compare,NULL);
+    for (int i = 0; i < 100; ++i){
+        HashSetEnter(&h,&i);
+    }
+    assert(h.numberOfElements == 100);
+
+    int number = 10;
+    HashSetMap(&h,addNumber,&number);
+    for (int i = 0; i < 100; ++i){
+        int index =  i + number;
+        int * res = HashSetLookup(&h,&index);
+        assert(res != NULL);
+    }
+
+    HashSetDispose(&h);
+
+}
 
 
 int main()
@@ -91,8 +119,8 @@ int main()
 
 
     TEST_HashSetNew();
-//    TEST_VectorNew();
-TEST_HashSetEnter();
-TEST_HashSetLookUp();
+    TEST_HashSetEnter();
+    TEST_HashSetLookUp();
+    TEST_HashSetMapFn();
     return 0;
 }

@@ -134,7 +134,10 @@ void VectorMap(vector *v, VectorMapFunction mapFn, void *auxData)
 
     assert(mapFn != NULL);
     for (int i = 0; i < v->logLen; ++i){
-        mapFn((char *) v->elems + i * v->elemSize, auxData);
+
+        void * elemAddr = (char *) v->elems + i * v->elemSize;
+
+        mapFn(elemAddr, auxData);
     }
 
 }
