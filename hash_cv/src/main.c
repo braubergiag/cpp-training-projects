@@ -14,22 +14,40 @@ void TEST_HashSetNew(){
 
     hashset h;
 
-    HashSetNew(&h,sizeof(int),10, hash_number, hash_compare,NULL);
+    HashSetNew(&h,sizeof(int),3, hash_number, hash_compare,NULL);
     assert(h.elemSize == sizeof(int));
-    assert(h.numberOfBuckets == 10);
+    assert(h.numberOfBuckets == 3);
     assert(h.hashFn == &hash_number);
     assert(h.compareFn == &hash_compare);
+
+
+    HashSetDispose(&h);
 }
 
 
+void TEST_VectorNew(){
 
 
+    vector  v;
+    VectorNew(&v,sizeof(vector), VectorDispose, 3);
 
-int main(){
+    vector a;
+    VectorNew(&a,sizeof(int),NULL, 10);
+    VectorAppend(&v,&a);
+
+
+    VectorDispose(&v);
+
+
+}
+
+
+int main()
+{
 
 
 
     TEST_HashSetNew();
-
+//    TEST_VectorNew();
     return 0;
 }
