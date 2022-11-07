@@ -41,6 +41,49 @@ void TEST_VectorNew(){
 
 }
 
+void TEST_HashSetEnter(){
+
+    hashset h;
+
+    HashSetNew(&h,sizeof(int),10, hash_number, hash_compare,NULL);
+    for (int i = 0; i < 100; ++i){
+        HashSetEnter(&h,&i);
+    }
+    assert(h.numberOfElements == 100);
+
+    for (int i = 0; i < 100; ++i){
+        HashSetEnter(&h,&i);
+    }
+    assert(h.numberOfElements == 100);
+
+
+
+    HashSetDispose(&h);
+
+
+}
+
+void TEST_HashSetLookUp(){
+    hashset h;
+
+    HashSetNew(&h,sizeof(int),10, hash_number, hash_compare,NULL);
+    for (int i = 0; i < 100; ++i){
+        HashSetEnter(&h,&i);
+    }
+    assert(h.numberOfElements == 100);
+
+    for (int i = 0; i < 100; ++i) {
+
+        int * res = HashSetLookup(&h,&i);
+        assert(res != NULL);
+
+    }
+
+
+    HashSetDispose(&h);
+}
+
+
 
 int main()
 {
@@ -49,5 +92,7 @@ int main()
 
     TEST_HashSetNew();
 //    TEST_VectorNew();
+TEST_HashSetEnter();
+TEST_HashSetLookUp();
     return 0;
 }

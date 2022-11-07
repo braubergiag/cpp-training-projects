@@ -12,6 +12,7 @@ void HashSetNew(hashset *h, int elemSize, int numBuckets,
 
     h->elemSize = elemSize;
     h->numberOfBuckets = numBuckets;
+    h->numberOfElements = 0;
     VectorNew(&h->buckets,sizeof (vector),NULL,h->numberOfBuckets);
     for (int i = 0; i < h->numberOfBuckets; ++i){
         vector v;
@@ -38,17 +39,50 @@ void HashSetDispose(hashset *h)
 }
 
 int HashSetCount(const hashset *h)
-{ return 0; }
+{ return h->numberOfElements; }
 
 void HashSetMap(hashset *h, HashSetMapFunction mapfn, void *auxData)
-{}
+{
+
+    for (int i = 0; i < h->numberOfBuckets; ++i){
+
+    }
+
+
+}
 
 void HashSetEnter(hashset *h, const void *elemAddr)
 {
 
-    int bucket = h->hashFn(elemAddr);
+    int bucket = h->hashFn(elemAddr,h->numberOfBuckets);
+
+    vector * v = VectorNth(&h->buckets, bucket);
+
+    int index = VectorSearch(v,elemAddr,h->compareFn,0,false);
+    if (index != -1) {
+        VectorReplace(v,elemAddr,index);
+    } else {
+        VectorAppend(v,elemAddr);
+        h->numberOfElements++;
+    }
+
+
+
+
 
 }
 
 void *HashSetLookup(const hashset *h, const void *elemAddr)
-{ return NULL; }
+{
+
+    for (int i = 0; i < h->numberOfBuckets; ++i){
+        int bucket = h->hashFn(elemAddr,h->numberOfBuckets);
+        vector * v = VectorNth(&h->buckets, bucket);
+        int index = VectorSearch(v,elemAddr,h->compareFn,0,false);
+        if (index != -1){
+            return VectorNth(v, index);
+        }
+    }
+
+    return NULL;
+}
