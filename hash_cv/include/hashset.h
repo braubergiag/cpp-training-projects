@@ -77,9 +77,10 @@ typedef struct {
     // to be filled in by you
     int elemSize;
     int numberOfBuckets;
-    void *hashFn;
-    void *compareFn;
-    void *freeFn;
+    HashSetHashFunction hashFn;
+    HashSetCompareFunction  compareFn;
+    HashSetFreeFunction freeFn;
+    HashSetMapFunction mapFn;
 } hashset;
 
 /**

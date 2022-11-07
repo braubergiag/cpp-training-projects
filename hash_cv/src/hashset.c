@@ -44,7 +44,11 @@ void HashSetMap(hashset *h, HashSetMapFunction mapfn, void *auxData)
 {}
 
 void HashSetEnter(hashset *h, const void *elemAddr)
-{}
+{
+
+    int bucket = h->hashFn(elemAddr);
+
+}
 
 void *HashSetLookup(const hashset *h, const void *elemAddr)
 { return NULL; }
