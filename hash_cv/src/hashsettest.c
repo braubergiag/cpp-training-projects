@@ -1,4 +1,4 @@
-#include "hashset.h"
+#include "../include/hashset.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -92,7 +92,7 @@ static void BuildTableOfLetterCounts(hashset *counts)
 {
   struct frequency localFreq, *found;
   int ch;
-  FILE *fp = fopen("hashsettest.c", "r"); // open self as file
+  FILE *fp = fopen("../src/hashsettest.c", "r"); // open self as file
   
   assert(fp != NULL);
   while ((ch = getc(fp)) != EOF) {
