@@ -34,6 +34,14 @@ int main(){
     SSANew(&ssa, 70000, 35);
     SSAInsert(&ssa, 33001, "need");
     SSAInsert(&ssa, 58291, "more");
+//    SSAInsert(&ssa, 32993, "Aba");
+//    SSAInsert(&ssa, 32998, "Ava");
+//    SSAInsert(&ssa, 32993, "A");
+    SSAInsert(&ssa, 32996, "Awq");
+    SSAInsert(&ssa, 32995, "Are");
+    SSAInsert(&ssa, 32995, "Who we Are");
+    SSAInsert(&ssa, 32997, "At");
+    SSAInsert(&ssa, 32997, "At home");
     SSAInsert(&ssa, 33000, "Eye");
     SSAInsert(&ssa, 33000, "I");
     SSAInsert(&ssa, 67899, "cowbell");

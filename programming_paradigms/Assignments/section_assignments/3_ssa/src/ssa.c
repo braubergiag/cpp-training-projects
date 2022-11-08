@@ -44,18 +44,22 @@ bool SSAInsert(sparsestringarray *ssa, int index, const char *str){
 
     group * gr = (group *) ( (char *) ssa->groups + groupIndex * sizeof (group) );
 
+    int i = 0, position = 0;
+    while (i < elemIndex) {
+        bool * elemAddr = (bool *) ((char *) gr->bitmap + i * sizeof(bool));
 
+        if (*elemAddr == true) ++position;
+        ++i;
+    }
 
-    if (gr->bitmap[elemIndex] == true){
-
-        int i = 0, position = 0;
-        while (i++ < elemIndex) {
-            if (gr->bitmap[i] == true) ++position;
-        }
+    bool * elemAddr = (bool *) ((char *) gr->bitmap + elemIndex * sizeof(bool));
+    if (*elemAddr == true){
         VectorReplace(&gr->strings,str,position);
+        return false;
     } else {
-        gr->bitmap[elemIndex] = true;
-        VectorAppend(&gr->strings,str);
+        *elemAddr = true;
+        VectorInsert(&gr->strings,str,position);
+        return true;
     }
 
 
