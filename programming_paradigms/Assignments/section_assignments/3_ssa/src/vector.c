@@ -63,7 +63,7 @@ void *VectorNth(const vector *v, int position)
 void VectorReplace(vector *v, const void *elemAddr, int position)
 {
     assert(position >= 0 && position < v->logLen);
-    void * target = v->elems + v->elemSize * position;
+    void * target = (char *) v->elems + v->elemSize * position;
     if (v->freeFn != NULL) v->freeFn(target);
     memcpy(target,elemAddr,v->elemSize);
 
