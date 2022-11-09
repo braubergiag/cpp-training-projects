@@ -98,7 +98,15 @@ void VectorAppend(vector *v, const void *elemAddr)
     }
     void * target = v->elems + v->logLen * v->elemSize;
     memcpy(target,elemAddr,v->elemSize);
-    v->logLen++;
+#if NDEBUG
+    printf("elemAddr= %p\n",elemAddr);
+    printf("*elemAddr= %p\n",*(char **)elemAddr);
+    printf("&target = %p\n",&target);
+    printf("target = %p\n",target);
+    printf("target = %p\n",(char ** )target);
+    printf("*target = %p\n",*(char ** )target);
+#endif
+v->logLen++;
 
 }
 
