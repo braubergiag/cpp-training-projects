@@ -20,7 +20,11 @@ struct student_info {
 };
 
 
-std::istream & operator<<( std::istream & is,student_info & stud_info);
+std::istream & read( std::istream & is,student_info & stud_info);
+std::istream  & read_hw(std::istream & is, std::vector<double> & grades);
+bool compare(const student_info & lhs, const student_info& rhs);
+std::vector<student_info> extract_fails(std::vector<student_info> & students);
+std::vector<student_info> extract_didnt_hw(std::vector<student_info> & students);
 
 
 #endif //STUDENT_EXAM_STUDENT_INFO_H

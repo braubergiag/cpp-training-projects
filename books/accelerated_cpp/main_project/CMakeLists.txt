@@ -2,6 +2,7 @@ project(student_exam)
 
 add_executable(${PROJECT_NAME}
         src/main.cpp
+        src/student_info.cpp
         src/grader_util.cpp)
 
 
