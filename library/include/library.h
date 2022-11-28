@@ -8,6 +8,19 @@
 #include "book.h"
 #include "patron.h"
 #include <vector>
+
+struct BookInfo {
+    Book book;
+    int copy_amount;
+    int copy_available;
+
+};
+
+struct Transaction {
+    Patron patron;
+    Book book;
+
+};
 class library {
 
 public:
@@ -15,8 +28,9 @@ public:
 
 
 private:
-    std::vector<Book> books_;
+    std::vector<BookInfo> books_;
     std::vector<Patron> patrons_;
+    std::vector<Transaction> transactions_;
 };
 
 

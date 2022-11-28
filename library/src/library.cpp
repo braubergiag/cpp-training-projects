@@ -15,9 +15,10 @@ void library::read_from_file() {
     std::vector<std::string> isbns = doc.GetColumn<std::string>("isbn");
     std::cout << "Read " << titles.size() << " values." << std::endl;
 
-    const int copy_amount = 1;
+    const int copy_amount = 1, copy_available = 1;
     for (int i = 0; i < titles.size(); ++i) {
-        books_.emplace_back(Book(authors[i],titles[i],isbns[i],copy_amount));
+        BookInfo bookInfo{Book(authors[i],titles[i],isbns[i]),copy_amount,copy_available};
+        books_.emplace_back(bookInfo);
     }
 
 }

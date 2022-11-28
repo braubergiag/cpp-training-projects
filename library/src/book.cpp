@@ -9,16 +9,6 @@
 #include <string>
 
 
-
-
-int Book::getCopyAmount() const {
-    return copy_amount_;
-}
-
-void Book::setCopyAmount(int copyAmount) {
-    copy_amount_ = copyAmount;
-}
-
 const std::string &Book::getTitle() const {
     return title_;
 }
@@ -43,19 +33,11 @@ void Book::setIsbn(const std::string &isbn) {
     isbn_ = isbn;
 }
 
-int Book::getCopyAvailable() const {
-    return copy_available_;
-}
-
-void Book::setCopyAvailable(int copyAvailable) {
-    copy_available_ = copyAvailable;
-}
-
 Book::Book(std::string author,
            std::string title,
            std::string isbn, int copyAmount) :
                  author_(std::move(author)), title_(std::move(title)),
-                 isbn_(std::move(isbn)), copy_amount_(copyAmount),copy_available_(copyAmount){}
+                 isbn_(std::move(isbn)){}
 
 bool operator==(const Book &lhs, const Book &rhs) {
     return lhs.getIsbn() == rhs.getIsbn();
