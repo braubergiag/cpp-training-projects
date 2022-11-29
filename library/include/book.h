@@ -22,13 +22,13 @@ public:
                std::string title,
                std::string isbn);
 
-    const std::string &getTitle() const;
-    const std::string &getAuthor() const;
-    const std::string &getIsbn() const;
+    const std::string &get_title() const;
+    const std::string &get_author() const;
+    const std::string &get_isbn() const;
 public:
-    void setAuthor(const std::string &author);
-    void setTitle(const std::string &title);
-    void setIsbn(const std::string &isbn);
+    void set_author(const std::string &author);
+    void set_title(const std::string &title);
+    void set_isbn(const std::string &isbn);
 
 private:
     std::string title_;
