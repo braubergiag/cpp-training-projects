@@ -23,3 +23,9 @@ void Patron::return_book(const Book &book) {
     books_.erase(std::find(books_.begin(),books_.end(), book));
 
 }
+
+std::ostream &operator<<(std::ostream &os, const Patron &patron) {
+    os << "Name: " << patron.get_name() << "\n"
+        << "Card number: " << patron.get_card_number() << "\n";
+    return os;
+}

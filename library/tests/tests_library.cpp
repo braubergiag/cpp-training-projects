@@ -33,12 +33,18 @@ TEST(LibraryCore,BookInfo){
 TEST(LibraryCore,AddPatron){
     library lib;
     lib.read_from_file();
-    std::istringstream iss("ADD_PATRON Igor");
+    std::istringstream iss("ADD_PATRON Igor\n"
+                           "ADD_PATRON John\n"
+                           "ADD_PATRON Richard");
     string command, name;
-    iss >> command >> name;
-    lib.add_patron(name);
-    std::optional<Patron> patron = lib.patron(name);
-    ASSERT_EQ(patron->get_name(), "Igor");
-    ASSERT_EQ(patron->get_card_number(),1);
+    int card_number{0};
+    while (iss >> command) {
+        iss >> name;
+        lib.add_patron(name);
+        std::optional<Patron> patron = lib.patron(name);
+        ASSERT_EQ(patron->get_name(), name);
+        ASSERT_EQ(patron->get_card_number(),++card_number);
+
+    }
 
 }

@@ -2,8 +2,12 @@
 
 #include "../include/book.h"
 #include "../include/library.h"
+#include "../include/query.h"
 
 
+using std::cout;
+using std::cin;
+using std::string;
 int main(){
 
     library lib;
@@ -12,36 +16,49 @@ int main(){
 
     std::string command;
     while (std::cin >> command) {
-        if (command == "ADD_PATRON"){
-            std::string name;
-            std::cin >> name;
-            lib.add_patron(name);
-        }
-        else if (command == "BORROW_BOOK") {
-            std::string name, book_title;
-            std::cin >> name >> book_title;
-            lib.issue_book(name, book_title);
+        auto query = get_query_type(command);
+        std::string name, book_title;
+        switch (query) {
+            case lib_query::AddPatron:
+                std::cin >> name;
+                lib.add_patron(name);
+                break;
+            case lib_query::BorrowBook:
+                std::cin >> name >> book_title;
+                lib.issue_book(name, book_title);
+                break;
 
+            case lib_query::ReturnBook:
+                std::cin >> name >> book_title;
+                lib.take_book(name, book_title);
+                break;
+            case lib_query::PrintPatronInfo:
+            {
+                std::cin >> name;
+                std::optional<Patron> patron = lib.patron(name);
+                if (patron != std::nullopt) {
+                    cout << patron.value();
+                }
+                break;
+            }
+            case lib_query::PrintBookInfo:
+            {
+                std::cin.get();
+                std::getline(std::cin,book_title);
+                std::optional<Book> book = lib.book(book_title);
+                if (book != std::nullopt){
+                    cout << book.value();
+                }
+                break;
+            }
+
+            default:
+                std::cout << "Wrong command: " << command << "\n";
+                break;
         }
-        else if (command == "RETURN_BOOK") {
-            std::string name, book_title;
-            std::cin >> name >> book_title;
-            lib.take_book(name, book_title);
-        }
-        else if (command == "PATRON_INFO") {
-            std::string name;
-            std::cin >> name;
-            lib.patron(name);
-        }
-        else if (command == "PRINT_BOOK_INFO") {
-            std::string book_title;
-            std::cin.get();
-            std::getline(std::cin >> std::skipws,book_title);
-            lib.book(book_title);
-        }
-        else if (command == "PRINT_PATRONS"){
-            lib.print_patrons();
-        }
+
+
+
 
     }
 

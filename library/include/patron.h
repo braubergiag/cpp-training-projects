@@ -36,5 +36,7 @@ private:
 
 };
 
+std::ostream& operator<<(std::ostream & os, const Patron & patron);
+
 
 #endif //LIBRARY_PATRON_H

@@ -47,6 +47,6 @@ std::ostream &operator<<(std::ostream &os, const Book &book) {
 
     os << "Title: " << book.get_title() << "\n"
        << "Authors: " << book.get_author() << "\n"
-        << "ISBN: " << book.get_isbn();
+        << "ISBN: " << book.get_isbn() << "\n";
     return os;
 }
