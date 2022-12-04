@@ -1,0 +1,119 @@
+2022-11-16 19:09:29.151 (0) process_antispam_req(): body:
+{
+   "antiSpamReq" : [
+      {
+         "connection_name" : "SMPP_48_Technical",
+         "destAddress" : "989999900070",
+         "id" : "5BDE71F0",
+         "legID" : "MO",
+         "message" : "instagram",
+         "sourceAddress" : "989999155555",
+         "timestamp" : "1668613011"
+      }
+   ],
+   "initiator" : "SMSС1"
+}
+2022-11-16 19:09:29.151 (0) process_antispam_resp(): body:
+{"antiSpamResp": [{"id": "00000001", "result_details": "stop_words: museum", "status": 301}]}
+2022-11-16 19:09:29.151 (0) process_antispam_req(): body:
+{
+   "antiSpamReq" : [
+      {
+         "connection_name" : "SMPP_50_Technical",
+         "destAddress" : "989999900070",
+         "id" : "5BDE71F0",
+         "legID" : "MO",
+         "message" : "instagram",
+         "sourceAddress" : "989999155555",
+         "timestamp" : "1668613011"
+      }
+   ],
+   "initiator" : "SMSС1"
+}
+2022-11-16 19:09:29.151 (0) process_antispam_resp(): body:
+{"antiSpamResp": [{"id": "00000001", "result_details": "stop_words: museum", "status": 301}]}
+2022-11-16 19:09:29.151 (0) process_antispam_req(): body:
+{
+   "antiSpamReq" : [
+      {
+         "connection_name" : "SMPP_521_Technical",
+         "destAddress" : "989999900070",
+         "id" : "5BDE71F0",
+         "legID" : "MO",
+         "message" : "instagram",
+         "sourceAddress" : "989999155555",
+         "timestamp" : "1668613011"
+      }
+   ],
+   "initiator" : "SMSС1"
+}
+2022-11-16 19:09:29.151 (0) process_antispam_resp(): body:
+{"antiSpamResp": [{"id": "00000001", "result_details": "stop_words: museum", "status": 301}]}
+2022-11-16 19:09:29.151 (0) process_antispam_req(): body:
+{
+   "antiSpamReq" : [
+      {
+         "connection_name" : "SMPP_533_Technical",
+         "destAddress" : "989999900070",
+         "id" : "5BDE71F0",
+         "legID" : "MO",
+         "message" : "instagram",
+         "sourceAddress" : "989999155555",
+         "timestamp" : "1668613011"
+      }
+   ],
+   "initiator" : "SMSС1"
+}
+2022-11-16 19:09:29.151 (0) process_antispam_resp(): body:
+{"antiSpamResp": [{"id": "00000001", "result_details": "stop_words: museum", "status": 301}]}
+2022-11-16 19:09:29.151 (0) process_antispam_req(): body:
+{
+   "antiSpamReq" : [
+      {
+         "connection_name" : "SMPP_26_Technical",
+         "destAddress" : "989999900070",
+         "id" : "5BDE71F0",
+         "legID" : "MO",
+         "message" : "instagram",
+         "sourceAddress" : "989999155555",
+         "timestamp" : "1668613011"
+      }
+   ],
+   "initiator" : "SMSС1"
+}
+2022-11-16 19:09:29.151 (0) process_antispam_resp(): body:
+{"antiSpamResp": [{"id": "26", "result_details": "stop_words: museum", "status": 301}]}
+2022-11-16 19:09:29.151 (0) process_antispam_req(): body:
+{
+   "antiSpamReq" : [
+      {
+         "connection_name" : "SMPP_24_Technical",
+         "destAddress" : "989999900070",
+         "id" : "5BDE71F0",
+         "legID" : "MO",
+         "message" : "instagram",
+         "sourceAddress" : "989999155555",
+         "timestamp" : "1668613011"
+      }
+   ],
+   "initiator" : "SMSС1"
+}
+2022-11-16 19:09:29.151 (0) process_antispam_resp(): body:
+{"antiSpamResp": [{"id": "24", "result_details": "stop_words: museum", "status": 301}]}
+2022-11-16 19:09:29.151 (0) process_antispam_req(): body:
+{
+   "antiSpamReq" : [
+      {
+         "connection_name" : "SMPP_25_Technical",
+         "destAddress" : "989999900070",
+         "id" : "5BDE71F0",
+         "legID" : "MO",
+         "message" : "instagram",
+         "sourceAddress" : "989999155555",
+         "timestamp" : "1668613011"
+      }
+   ],
+   "initiator" : "SMSС1"
+}
+2022-11-16 19:09:29.151 (0) process_antispam_resp(): body:
+{"antiSpamResp": [{"id": "25", "result_details": "stop_words: museum", "status": 301}]}
