@@ -3,32 +3,25 @@
 
 #include <Eigen/Dense>
 #include <vector>
-#include "max_algebra.h"
+#include "../include/max_algebra.h"
+#include "../include/tropical.h"
 
 using namespace Eigen;
 using namespace std;
 
-void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const MaxAlgMatrixXd & Criteria, const string & hint){
+// 1.1. Построение генерирующей матрицы оптимальных весов
+MaxAlgMatrixXd construction_generating_matrix_optimal_weights(const MaxAlgMatrixXd & Criteria,double lambda){
+    MaxAlgMatrixXd D = Clini(d(1, lambda) * Criteria,"(1/lambda * C)");
+    return D;
+}
 
 
-    std::cout << hint << std::endl;
-    std::cout << "1.\n";
-//              "Определение для заданной матрицы C парных сравнений K кри-\n" <<
-//              "териев наилучшего и наихудшего векторов весов\n";
-//    std::cout << "Матрица сравнения критериев С:" << std::endl;
-    std::cout << Criteria << std::endl;
-    // 1.1. Построение генерирующей матрицы оптимальных весов
-//    std::cout << "1.1. Построение генерирующей матрицы оптимальных весов\n";
-    double lmb = SpectralRadius(Criteria,"C");
-//    std::cout << "Spectral radius С = " << lmb << std::endl;
-    MaxAlgMatrixXd D = Clini(d(1, lmb) * Criteria,"(1/lambda * C)");
-    std::cout << "D = \n" << D << std::endl;
+/* 1.2 Вычисление по матрице D со столбцами d_1 , . . . , d_K
+* наилучшего дифференцирующего вектора весов
+*/
 
-    /* 1.2 Вычисление по матрице D со столбцами d_1 , . . . , d_K
- * наилучшего дифференцирующего вектора весов
- */
-//    std::cout << "1.2. Вычисление по матрице D со столбцами d_1 , . . . , d_K\n" <<
-//              " наилучшего дифференцирующего вектора весов\n";
+int get_best_differentiating_vector(const MaxAlgMatrixXd & D){
+
     MaxAlgVectorXd I(D.rows());
     I.setOnes();
     double current_max = 0;
@@ -43,6 +36,23 @@ void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const Max
         }
 
     }
+    return l_;
+
+}
+
+void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const MaxAlgMatrixXd & Criteria, const string & hint){
+
+
+    std::cout << hint << std::endl;
+
+    std::cout << Criteria << std::endl;
+
+    double lambda = SpectralRadius(Criteria, "C");
+    MaxAlgMatrixXd D = construction_generating_matrix_optimal_weights(Criteria,lambda);
+    std::cout << "D = \n" << D << std::endl;
+
+    int l_ = get_best_differentiating_vector(D);
+
     std::cout << " Index l = " <<      l_ << std::endl;
     MaxAlgMatrixXd v = D.col(l_) * d(1,static_cast<double>(D.col(l_).sum()));
     std::cout << "v = \n" << v << std::endl;
@@ -51,6 +61,9 @@ void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const Max
  * */
 //    std::cout << "1.3." <<
 //              " Вычисление по матрице D наихудшего дифференцирующего вектора весов\n";
+
+    MaxAlgVectorXd I(D.rows());
+    I.setOnes();
 
     MaxAlgMatrixXd w = (I.transpose() * D).array().inverse();
     std::cout << "w = " << w.cast<double>() << std::endl;
@@ -97,7 +110,7 @@ void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const Max
     std::cout << " 2.3\n";
     I.resize(Q.rows());
     I.setOnes();
-    current_max = 0;
+    double current_max = 0;
     int m_ = 0;
     for (auto i = 0; i < Q.cols(); ++i) {
         MaxAlgMatrixXd x = Q.col(i);
