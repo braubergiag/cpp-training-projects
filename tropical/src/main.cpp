@@ -30,117 +30,45 @@ void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const Max
     std::cout << "w = " << w.cast<double>() << std::endl;
 
 
+    std::cout << "2.1\n";
 
-
-
-
-    /* 2.1
-     * Вычисление взвешенной суммы матриц парных сравнений
-     * */
-    std::cout << "2.1";
-    vector<MaxAlgMatrixXd> mat_ = Alternatives;
-    for (auto i = 0; i < v.size(); ++i){
-        mat_[i] *= v(i);
-    }
-    MaxAlgMatrixXd P(mat_.at(0).rows(),mat_.at(0).cols());
-    P.setIdentity();
-    for (auto const & mat : mat_){
-        P += mat;
-    }
+    MaxAlgMatrixXd P = computing_weighted_sum_pairwise_comparison_matrices(Alternatives,v);
     std::cout << "Matrix P = \n" << P << std::endl;
 
-    /* 2.2
-     * Построение генерирующей матрицы оптимальных рейтингов альтернатив
-     * */
+
 
     std::cout << "2.2.\n";
-    double mu = SpectralRadius(P,"P");
-    std::cout << "Spectral Radius P = " << mu << std::endl;
-    MaxAlgMatrixXd Q = Clini(d(1,mu) * P,"(mu^-1 P)");
+    MaxAlgMatrixXd Q = build_generating_matrix_optimal_ratings_alternatives(P);
     std::cout << " Matrix Clini Q = (mu^-1 P)* = \n";
     std::cout << Q << std::endl;
-    /* 2.3
-     * Вычисление по матрице Q со столбцами q 1 , . . . , q N наилучшего
-     * дифференцирующего вектора рейтингов альтернатив
-     * */
+
 
     std::cout << " 2.3\n";
-    MaxAlgVectorXd I(D.rows());
-    I.setOnes();
-    I.resize(Q.rows());
-    I.setOnes();
-    double current_max = 0;
-    int m_ = 0;
-    for (auto i = 0; i < Q.cols(); ++i) {
-        MaxAlgMatrixXd x = Q.col(i);
-        MaxAlgMatrixXd x_ = Q.array().col(i).inverse();
-        auto r1 = ((I.transpose() * x) * (I.transpose() * x_));
-        if (current_max < r1(0).scalar) {
-            m_ =  i;
-            current_max = r1(0).scalar;
-        }
-
-    }
-    std::cout << " Index m = " << m_ << std::endl;
-    MaxAlgMatrixXd X = Q.col(m_) * d(1,static_cast<double>(Q.col(l_).sum()));
-//    Vector3d X_test_1 = {1,d(2*lmb,mu),d(mu,9)};
-//    Vector4d X_test_2 = {d(mu,6),d(mu,4),1,d(1,2)};
+    MaxAlgMatrixXd X = calc_best_differentiating_vector_ratings_alternatives(D, Q, l_);
     std::cout << " best differentiating rating vector alternative:\n";
     std::cout << "x = \n" << X << std::endl;
-//    std::cout << "[Статья] x_1 = \n" << X_test_1.transpose() << std::endl;;
-//    std::cout << "[Статья] x_2  = \n" << X_test_2.transpose() << std::endl;;
 
 
-/* 3
- * Определение для заданных матриц A_1 , . . . , A_K парных сравнений
-    N альтернатив и вектора весов w = (w_1 , . . . , w_K ) T наихудшего
-    дифференцирующего вектора рейтингов альтернатив
- *
- * */
     std::cout << "3.\n";
-//              "Определение для заданных матриц A_1 , . . . , A_K парных сравнений\n" <<
-//              "N альтернатив и вектора весов w = (w_1 , . . . , w_K )^T наихудшего\n" <<
-//              "дифференцирующего вектора рейтингов альтернатив\n";
-
-/* 3.1
- * Вычисление взвешенной суммы матриц парных сравнений
- * */
     std::cout << "3.1\n";
-    vector<MaxAlgMatrixXd> mat_R = Alternatives;
-    for (auto i = 0; i < w.size(); ++i){
-        mat_R[i] *= w(i);
-    }
-    MaxAlgMatrixXd R(mat_R.at(0).rows(),mat_R.at(0).cols());
-    R.setIdentity();
-    for (auto const & mat : mat_R){
-        R += mat;
-    }
+    MaxAlgMatrixXd R = computing_weighted_sum_pairwise_comparison_matrices(Alternatives,w);
 
     std::cout << "Matrix R = \n" << R << std::endl;
 
-    /* 3.2
-     *Построение генерирующей матрицы оптимальных рейтингов альтернатив
-     * */
-
     std::cout << "3.2\n";
-    double vu = SpectralRadius(R,"R");
-    std::cout << "Spectral Radius R = " << vu << std::endl;
-    MaxAlgMatrixXd S = Clini(d(1, vu) * R,"(vu^-1 * R)");
+    MaxAlgMatrixXd S = build_generating_matrix_optimal_ratings_alternatives(R);
+
+//    std::cout << "Spectral Radius R = " << vu << std::endl;
+//    MaxAlgMatrixXd S = Clini(d(1, vu) * R,"(vu^-1 * R)");
     std::cout << "Matrix Clini S = (v^-1 R)* = \n";
     std::cout << S << std::endl;
 
 
-
-/* 3.3
- * Вычисление по матрице S наихудшего дифференцирующего вектора рейтингов альтернатив
- * */
     std::cout << "3.3\n";
-//                 "Вычисление по матрице S наихудшего дифференцирующего\n" <<
-//              "вектора рейтингов альтернатив\n";
-    MaxAlgMatrixXd y = (I.transpose() * S).array().inverse().transpose();
-    std::cout << "y = \n" << y << std::endl;
 
-//    std::cout << "------------------Результаты---------------\n";
+
+    MaxAlgMatrixXd y = calc_worst_differentiating_vector_ratings_alternatives(S);
+
     std::cout << "best differentiating rating vector alternative:: x =\n" <<  X << std::endl;
     std::cout << "worst differentiating rating vector alternative:: y =\n" << y.cast<double>() << std::endl;
 
