@@ -5,77 +5,34 @@
 #include <vector>
 #include "../include/max_algebra.h"
 #include "../include/tropical.h"
+#include "../include/method.h"
 
 using namespace Eigen;
 using namespace std;
 
-// 1.1. Построение генерирующей матрицы оптимальных весов
-MaxAlgMatrixXd construction_generating_matrix_optimal_weights(const MaxAlgMatrixXd & Criteria,double lambda){
-    MaxAlgMatrixXd D = Clini(d(1, lambda) * Criteria,"(1/lambda * C)");
-    return D;
-}
 
 
-/* 1.2 Вычисление по матрице D со столбцами d_1 , . . . , d_K
-* наилучшего дифференцирующего вектора весов
-*/
-
-int get_best_differentiating_vector(const MaxAlgMatrixXd & D){
-
-    MaxAlgVectorXd I(D.rows());
-    I.setOnes();
-    double current_max = 0;
-    int l_ = 0;
-    for (auto i = 0; i < D.cols(); ++i) {
-        MaxAlgMatrixXd x = D.col(i);
-        MaxAlgMatrixXd x_ = D.array().col(i).inverse();
-        auto r1 = ((I.transpose() * x) * (I.transpose() * x_));
-        if (current_max < r1(0).scalar) {
-            l_ =  i;
-            current_max = r1(0).scalar;
-        }
-
-    }
-    return l_;
-
-}
 
 void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const MaxAlgMatrixXd & Criteria, const string & hint){
 
-
-    std::cout << hint << std::endl;
-
-    std::cout << Criteria << std::endl;
 
     double lambda = SpectralRadius(Criteria, "C");
     MaxAlgMatrixXd D = construction_generating_matrix_optimal_weights(Criteria,lambda);
     std::cout << "D = \n" << D << std::endl;
 
-    int l_ = get_best_differentiating_vector(D);
-
+    int l_ = get_best_differentiating_weight_vector_index(D);
     std::cout << " Index l = " <<      l_ << std::endl;
-    MaxAlgMatrixXd v = D.col(l_) * d(1,static_cast<double>(D.col(l_).sum()));
+    MaxAlgMatrixXd v = get_best_differentiating_weight_vector(D, l_);
     std::cout << "v = \n" << v << std::endl;
-/* 1.3
- * Вычисление по матрице D наихудшего дифференцирующего вектора весов
- * */
-//    std::cout << "1.3." <<
-//              " Вычисление по матрице D наихудшего дифференцирующего вектора весов\n";
 
-    MaxAlgVectorXd I(D.rows());
-    I.setOnes();
 
-    MaxAlgMatrixXd w = (I.transpose() * D).array().inverse();
+    MaxAlgMatrixXd w = get_worst_differentiating_weight_vector(D);
     std::cout << "w = " << w.cast<double>() << std::endl;
-    /* 2
-     * Определение для заданных матриц A_1 , . . . , A_K парных сравнений
-    N альтернатив и вектора весов v = (v_1 , . . . , v_K )^T наилучшего диф-
-    ференцирующего вектора рейтингов альтернатив.
-     * */
-//    std::cout << "2\n"
-//                 " Определение для заданных матриц A_1 , . . . , A_K парных сравнений\n" <<
-//              " N альтернатив и вектора весов v = (v_1 , . . . , v_K )^T наилучшего диф-\n" <<
-//              " ференцирующего вектора рейтингов альтернатив.\n";
+
+
+
+
+
 
     /* 2.1
      * Вычисление взвешенной суммы матриц парных сравнений
@@ -108,6 +65,8 @@ void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const Max
      * */
 
     std::cout << " 2.3\n";
+    MaxAlgVectorXd I(D.rows());
+    I.setOnes();
     I.resize(Q.rows());
     I.setOnes();
     double current_max = 0;
@@ -263,9 +222,10 @@ void TestMinMaxApprox(){
 
 
 }
-int main() {
+int main()
+{
 
-    //TestMinMaxApprox();
+    TestMinMaxApprox();
 //    TestRunner tr;
 //    tr.RunTest(TestMatrixAddition,"TestMatrixAddition");
 //    tr.RunTest(TestMatrixMultiplication,"TestMatrixMultiplication");
@@ -274,37 +234,11 @@ int main() {
 //
 //
 //    TestMinMaxApprox();
-    {
-        MaxAlgMatrixXd A1(3, 3), A2(3, 3), C(2, 2), I(2, 2);
-        A1 << 1, 3, 2,
-                d(1, 3), 1, d(1, 4),
-                d(1, 2), 4, 1;
-        A2 << 1, 4, 5,
-                d(1, 4), 1, d(1, 3),
-                d(1, 5), 3, 1;
-//        C << 1,4,2,
-//                d(1,4),1,d(1,3),
-//                d(1,2),3,1;
-        C << 1, 5,
-                d(1, 5), 1;
-        I.setIdentity();
-
-
-//        Power(C,2,"C");
-//        double lambda = SpectralRadius(C,"C");
-        MinMaxLogApprox({A1, A2}, C, "");
 
 
 
 
-//    << Power(Tr(Power(C,2)),1/2) << " " <<  Tr(Power(C,3))
-//    std::cout << C.trace() << " " << pow(static_cast<double>(Power(C,2).trace()),1./2) << " " <<
-//    pow(static_cast<double>(Power(C,3).trace()),1./3) << std::endl;
-//    std::cout << (I + ( 1./3 * C) + 1./9 * Power(C,2)).cast<double>()<< std::endl;
-//    std::cout << Clini(1./3 * C) << std::endl;
-//    std::cout << (Power(C,2)).cast<double>() << std::endl;
 
-    }
     return 0;
 }
 

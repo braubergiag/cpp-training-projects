@@ -3,7 +3,11 @@ project (Tropical)
 set(CMAKE_CXX_STANDARD 17)
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 
-add_executable (${PROJECT_NAME} src/main.cpp src/tropical.cpp include/max_algebra.h )
+add_executable (${PROJECT_NAME}
+                src/main.cpp
+                src/tropical.cpp
+                src/method.cpp
+                include/max_algebra.h )
 target_link_libraries (${PROJECT_NAME} Eigen3::Eigen)
 
 
