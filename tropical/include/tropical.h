@@ -20,7 +20,7 @@ double Tr(const MaxAlgMatrixXd& matrixXd);
 std::ostream& operator<<(std::ostream & stream, const MaxAlgMatrixXd& matrixXd);
 MaxAlgMatrixXd power(const MaxAlgMatrixXd &matrixXd, int n = 1);
 MaxAlgMatrixXd clini(const MaxAlgMatrixXd &matrixXd);
-double spectral_radius(const MaxAlgMatrixXd& matrixXd, string hint = {});
+double spectral_radius(const MaxAlgMatrixXd &matrixXd);
 double SpectralRadiusAdvance(const MaxAlgMatrixXd & matrixXd);
 
 

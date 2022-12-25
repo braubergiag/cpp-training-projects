@@ -56,7 +56,7 @@ MaxAlgMatrixXd computing_weighted_sum_pairwise_comparison_matrices(std::vector<M
 }
 
 MaxAlgMatrixXd build_generating_matrix_optimal_ratings_alternatives(const MaxAlgMatrixXd &P) {
-    double mu = spectral_radius(P, "P");
+    double mu = spectral_radius(P);
     MaxAlgMatrixXd Q = clini(d(1, mu) * P);
     return Q;
 }
@@ -93,7 +93,7 @@ MaxAlgMatrixXd calc_worst_differentiating_vector_ratings_alternatives(const MaxA
 void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const MaxAlgMatrixXd & Criteria, const string & hint){
 
 
-    double lambda = spectral_radius(Criteria, "C");
+    double lambda = spectral_radius(Criteria);
     std::cout << lambda << "\n";
     MaxAlgMatrixXd D = construction_generating_matrix_optimal_weights(Criteria,lambda);
     std::cout << "D = \n" << D << std::endl;

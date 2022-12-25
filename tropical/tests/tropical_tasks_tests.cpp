@@ -3,7 +3,6 @@
 #include "../include/max_algebra.h"
 #include "../include/tropical.h"
 #include "../include/method.h"
-#include "tropical_utils.h"
 
 TEST(TropicalModule,TropicalTask_5_1) {
         //5.1. Решение задачи о выборе места работы"
@@ -38,7 +37,7 @@ TEST(TropicalModule,TropicalTask_5_1) {
                 2,2,2,3,1,1;
 
     const double epsilon = 0.001;
-    double lambda = spectral_radius(C, "C");
+    double lambda = spectral_radius(C);
     double lambda_actual = 1.8612;
     ASSERT_NEAR(lambda,lambda_actual,epsilon);
 
@@ -159,7 +158,7 @@ TEST(TropicalModule,TropicalTask_5_2){
 
 
     const double epsilon = 0.001;
-    double lambda = spectral_radius(C, "C");
+    double lambda = spectral_radius(C);
     double lambda_actual = 1.59231;
     ASSERT_NEAR(lambda,lambda_actual,epsilon);
 

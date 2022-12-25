@@ -8,18 +8,14 @@ std::ostream& operator<<(std::ostream & stream, const MaxAlgMatrixXd& matrixXd) 
 }
 
 
-double spectral_radius(const MaxAlgMatrixXd& matrixXd, string hint) {
+double spectral_radius(const MaxAlgMatrixXd &matrixXd) {
     int n = 1;
     double current_det = static_cast<double>(matrixXd.trace());
     MaxAlgMatrixXd temp = matrixXd;
 
-
     for (int i = 1; i < matrixXd.rows(); ++i){
         temp *= matrixXd;
-        ++n;
-        if (current_det < pow(static_cast<double>(temp.trace()), 1./n)) {
-            current_det = pow(static_cast<double>(temp.trace()), 1./n);
-        }
+        current_det = std::max(current_det,pow(static_cast<double>(temp.trace()), d(1,++n)));
     }
     return current_det;
 }
@@ -53,10 +49,7 @@ double Tr(const MaxAlgMatrixXd& matrixXd) {
     MaxAlgMatrixXd temp = matrixXd;
     for (int i = 1; i < matrixXd.rows(); ++i){
         temp *= matrixXd;
-//        std::cout << temp.cast<double>() << std::endl;
-        if (current_det < static_cast<double>(temp.trace())) {
-            current_det = static_cast<double>(temp.trace());
-        }
+        current_det = std::max(current_det,static_cast<double>(temp.trace()));
     }
 
     return current_det;

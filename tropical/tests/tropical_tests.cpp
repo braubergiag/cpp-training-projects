@@ -2,7 +2,6 @@
 #include <Eigen/Dense>
 #include "../include/max_algebra.h"
 #include "../include/tropical.h"
-#include "tropical_utils.h"
 using MaxAlgMatrixXd = MaxAlgMatrix<double ,Eigen::Dynamic,Eigen::Dynamic>;
 using MaxAlgVectorXd = MaxAlgMatrix<double, Eigen::Dynamic,1>;
 using MaxAlgArrayXXd = MaxAlgArray<double , Eigen::Dynamic, Eigen::Dynamic>;
@@ -10,12 +9,13 @@ using MaxAlgArrayXd = MaxAlgArray<double, Eigen::Dynamic,1>;
 
 TEST(TropicalModule, spectral_radius){
     MaxAlgMatrixXd A1(4,4);
+    const double epsilon = 0.001;
 
     A1 << 1,3,4,2,
          d(1,3),1,d(1,2),d(1,3),
          d(1,4),2,1,4,
          d(1,2),3,d(1,4),1;
-    ASSERT_DOUBLE_EQ(spectral_radius(A1), 2.0);
+    ASSERT_NEAR(spectral_radius(A1), 2.0, epsilon);
 
 
     MaxAlgMatrixXd A2(4,4);
@@ -23,7 +23,7 @@ TEST(TropicalModule, spectral_radius){
         3,1,4,1,
         2,d(1,4),1,2,
         3,1,d(1,2),1;
-    ASSERT_DOUBLE_EQ(spectral_radius(A2), 2.0);
+    ASSERT_NEAR(spectral_radius(A2), 2.0, epsilon);
 
 
 
@@ -32,7 +32,7 @@ TEST(TropicalModule, spectral_radius){
 TEST(TropicalModule, clini){
 
     MaxAlgMatrixXd  A1(4,4), A_clini(4,4);
-
+    const double epsilon = 0.001;
     A1 << d(1,2), d(3,2), 2, 1,
         d(1,6),d(1,2),d(1,4),d(1,6),
         d(1,8),1,d(1,2),2,
@@ -43,10 +43,7 @@ TEST(TropicalModule, clini){
                 d(1,2),3,1,2,
                 d(1,4),d(3,2),d(1,2),1;
 
-//    std::cout << clini(A1).norm().scalar << "\n\n" << A_clini.norm().scalar << "\n";
-//    ASSERT_TRUE(clini(A1).isApprox(A_clini));
-
-    ASSERT_DOUBLE_EQ(clini(A1).norm().scalar, A_clini.norm().scalar);
+    ASSERT_NEAR(clini(A1).norm().scalar, A_clini.norm().scalar,epsilon);
 
     MaxAlgMatrixXd A2(4,4);
     A2 << d(1,2), d(1,6),d(1,4),d(1,6),
@@ -59,7 +56,8 @@ TEST(TropicalModule, clini){
                 3,1,2,2,
                 d(3,2),d(1,2),1,1,
                 d(3,2),d(1,2),1,1;
-    ASSERT_EQ(clini(A2), A2_clini);
+    ASSERT_NEAR(clini(A2).norm().scalar, A2_clini.norm().scalar,epsilon);
+
 
 
 
