@@ -8,7 +8,7 @@ std::ostream& operator<<(std::ostream & stream, const MaxAlgMatrixXd& matrixXd) 
 }
 
 
-double SpectralRadius(const MaxAlgMatrixXd& matrixXd,string hint) {
+double spectral_radius(const MaxAlgMatrixXd& matrixXd, string hint) {
     int n = 1;
     double current_det = static_cast<double>(matrixXd.trace());
     MaxAlgMatrixXd temp = matrixXd;
@@ -24,14 +24,16 @@ double SpectralRadius(const MaxAlgMatrixXd& matrixXd,string hint) {
     return current_det;
 }
 
-MaxAlgMatrixXd Clini(const MaxAlgMatrixXd& matrixXd,string hint){
-    MaxAlgMatrixXd A(matrixXd.rows(),matrixXd.cols());
+MaxAlgMatrixXd clini(const MaxAlgMatrixXd &matrixXd) {
+    size_t n = matrixXd.rows();
+
+    MaxAlgMatrixXd A(n,n);
     MaxAlgMatrixXd temp = matrixXd;
 
     A.setIdentity();
     A += temp;
 
-    for (int i = 1; i < matrixXd.rows() - 1; ++i) {
+    for (int i = 1; i < n - 1; ++i) {
         temp *= matrixXd;
         A += temp;
     }

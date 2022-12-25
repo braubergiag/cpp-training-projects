@@ -29,7 +29,7 @@ MaxAlgMatrixXd get_best_differentiating_weight_vector(const MaxAlgMatrixXd &D, i
 }
 
 MaxAlgMatrixXd construction_generating_matrix_optimal_weights(const MaxAlgMatrixXd & Criteria,double lambda){
-    MaxAlgMatrixXd D = Clini(d(1, lambda) * Criteria,"(1/lambda * C)");
+    MaxAlgMatrixXd D = clini(d(1, lambda) * Criteria);
     return D;
 }
 
@@ -56,8 +56,8 @@ MaxAlgMatrixXd computing_weighted_sum_pairwise_comparison_matrices(std::vector<M
 }
 
 MaxAlgMatrixXd build_generating_matrix_optimal_ratings_alternatives(const MaxAlgMatrixXd &P) {
-    double mu = SpectralRadius(P,"P");
-    MaxAlgMatrixXd Q = Clini(d(1,mu) * P,"(mu^-1 P)");
+    double mu = spectral_radius(P, "P");
+    MaxAlgMatrixXd Q = clini(d(1, mu) * P);
     return Q;
 }
 
@@ -79,7 +79,7 @@ calc_best_differentiating_vector_ratings_alternatives(const MaxAlgMatrixXd &D, c
         }
 
     }
-    std::cout << " Index m = " << m_ << std::endl;
+    // std::cout << " Index m = " << m_ << std::endl;
     MaxAlgMatrixXd X = Q.col(m_) * d(1,static_cast<double>(Q.col(index).sum()));
     return X;
 }
@@ -93,7 +93,8 @@ MaxAlgMatrixXd calc_worst_differentiating_vector_ratings_alternatives(const MaxA
 void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const MaxAlgMatrixXd & Criteria, const string & hint){
 
 
-    double lambda = SpectralRadius(Criteria, "C");
+    double lambda = spectral_radius(Criteria, "C");
+    std::cout << lambda << "\n";
     MaxAlgMatrixXd D = construction_generating_matrix_optimal_weights(Criteria,lambda);
     std::cout << "D = \n" << D << std::endl;
 
@@ -115,7 +116,7 @@ void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const Max
 
     std::cout << "2.2.\n";
     MaxAlgMatrixXd Q = build_generating_matrix_optimal_ratings_alternatives(P);
-    std::cout << " Matrix Clini Q = (mu^-1 P)* = \n";
+    std::cout << " Matrix clini Q = (mu^-1 P)* = \n";
     std::cout << Q << std::endl;
 
 
@@ -136,7 +137,7 @@ void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const Max
 
 //    std::cout << "Spectral Radius R = " << vu << std::endl;
 //    MaxAlgMatrixXd S = Clini(d(1, vu) * R,"(vu^-1 * R)");
-    std::cout << "Matrix Clini S = (v^-1 R)* = \n";
+    std::cout << "Matrix clini S = (v^-1 R)* = \n";
     std::cout << S << std::endl;
 
 

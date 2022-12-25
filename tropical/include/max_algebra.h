@@ -22,7 +22,6 @@ struct MaxAlg {
         return *this;
     }
 
-
     friend MaxAlg operator+(MaxAlg left, MaxAlg right) noexcept {
         left += right;
         return left;
@@ -72,6 +71,16 @@ struct MaxAlg {
     }
 
 };
+
+
+template <class T>
+double sqrt(const MaxAlg<T> & val) {
+    return ::sqrt(val.scalar);
+}
+
+
+
+
 template<class T, Eigen::Index Rows, Eigen::Index Cols>
 using MaxAlgMatrix = Eigen::Matrix<MaxAlg<T>,Rows,Cols>;
 

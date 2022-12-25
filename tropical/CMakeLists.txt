@@ -27,7 +27,9 @@ add_executable(
         test_tropical
         include/max_algebra.h
         src/tropical.cpp
+        src/method.cpp
         tests/tropical_tests.cpp
+        tests/tropical_tasks_tests.cpp
 
 
 )
