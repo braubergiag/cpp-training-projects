@@ -21,6 +21,7 @@ std::ostream& operator<<(std::ostream & stream, const MaxAlgMatrixXd& matrixXd);
 MaxAlgMatrixXd power(const MaxAlgMatrixXd &matrixXd, int n = 1);
 MaxAlgMatrixXd Clini(const MaxAlgMatrixXd& matrixXd,string hint = {});
 double SpectralRadius(const MaxAlgMatrixXd& matrixXd,string hint = {});
+double SpectralRadiusAdvance(const MaxAlgMatrixXd & matrixXd);
 
 
 

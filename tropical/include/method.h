@@ -8,6 +8,9 @@
 
 #include "tropical.h"
 
+void MinMaxLogApprox(const std::vector<MaxAlgMatrixXd> & Alternatives, const MaxAlgMatrixXd & Criteria, const string & hint);
+
+
 int get_best_differentiating_weight_vector_index(const MaxAlgMatrixXd & D);
 MaxAlgMatrixXd get_best_differentiating_weight_vector(const MaxAlgMatrixXd & D, int index);
 MaxAlgMatrixXd get_worst_differentiating_weight_vector(const MaxAlgMatrixXd & D);
