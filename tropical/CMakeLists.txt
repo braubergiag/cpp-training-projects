@@ -28,6 +28,9 @@ add_executable(
         include/max_algebra.h
         src/tropical.cpp
         src/method.cpp
+        src/ahp_decision_method.cpp
+        src/gm_decision_method.cpp
+        src/decision_method.cpp
         tests/tropical_tests.cpp
         tests/tropical_tasks_tests.cpp
 
