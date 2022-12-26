@@ -7,6 +7,8 @@
 
 
 class decision_method {
+
+public:
     virtual void perform() const = 0;
 };
 
