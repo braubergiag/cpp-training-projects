@@ -33,6 +33,8 @@ add_executable(
         src/decision_method.cpp
         src/tropical_decision_method.cpp
         src/heuristic_decision_method.cpp
+        src/decision.cpp
+
         tests/tropical_tests.cpp
         tests/tropical_tasks_tests.cpp
 
