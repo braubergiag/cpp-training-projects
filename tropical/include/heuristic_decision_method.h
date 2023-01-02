@@ -17,8 +17,13 @@ public:
     const std::vector<Eigen::MatrixXd> &get_alternatives() const;
     const Eigen::MatrixXd &get_criteria() const;
 
+
+    int get_criteria_count() const;
+    int get_alternatives_count() const;
+
     void set_criteria(const Eigen::MatrixXd &criteria);
     void set_alternatives(const std::vector<Eigen::MatrixXd> &alternatives);
+
 
 public:
     heuristic_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const Eigen::MatrixXd &criteria);

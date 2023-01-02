@@ -23,3 +23,11 @@ const Eigen::MatrixXd &heuristic_decision_method::get_criteria() const {
 void heuristic_decision_method::set_criteria(const Eigen::MatrixXd &criteria) {
     criteria_ = criteria;
 }
+
+int heuristic_decision_method::get_criteria_count() const {
+    return alternatives_.size();
+}
+
+int heuristic_decision_method::get_alternatives_count() const {
+    return alternatives_.at(0).rows();
+}
