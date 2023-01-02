@@ -9,7 +9,7 @@ inline double d(double p, double q) {
 
 using Eigen::VectorXd;
 using Eigen::MatrixXcd;
-TEST(AHP,AHP_Task_1) {
+TEST(AHPModule,AHP_Task_1) {
     MatrixXd A1(3,3),A2(3,3),A3(3,3),A4(3,3),A5(3,3),A6(3,3);
 
     A1 <<   1,d(1,3),d(1,2),
@@ -48,17 +48,12 @@ TEST(AHP,AHP_Task_1) {
     ASSERT_NEAR(actual_main_eigen_vector.norm(),main_eigen_vector.norm(),eps);
 
 
-
     ahp_model.perform_advanced();
 
+    Eigen::MatrixXd final_weights(1,3);
+    final_weights <<  0.43211 , 0.342146 ,0.225744 ;
 
-#if 0
-    for (auto & alter: ahp_model.get_alternatives_main_eigen_vectors()) {
-        std::cout << alter << "\n\n";
-    }
-#endif
-
-    std::cout << ahp_model.get_weight_vector() << "\n";
+    ASSERT_NEAR(ahp_model.get_weight_vector().norm(), final_weights.norm(), eps);
 
 
 
@@ -68,7 +63,7 @@ TEST(AHP,AHP_Task_1) {
 
 
 
-TEST(AHP, AHP_Task_5_1) {
+TEST(AHPModule, AHP_Task_5_1) {
 
     //5.1. Решение задачи о выборе места работы"
     MatrixXd A1(3,3),A2(3,3),A3(3,3),A4(3,3),A5(3,3),A6(3,3);
@@ -100,6 +95,18 @@ TEST(AHP, AHP_Task_5_1) {
             d(1,4),d(1,4),d(1,5),1,d(1,3),d(1,3),
             1,1,d(1,3),3,1,1,
             2,2,2,3,1,1;
+
+
+    ahp_decision_method ahp_model({A1,A2,A3,A4,A5,A6},C);
+    double eps = 0.01;
+
+    ahp_model.perform_advanced();
+
+    Eigen::MatrixXd final_weights(1,3);
+    final_weights <<  0.3843 ,0.3516 ,0.2641;
+
+    ASSERT_NEAR(ahp_model.get_weight_vector().norm(), final_weights.norm(), eps);
+
 
 
 }
