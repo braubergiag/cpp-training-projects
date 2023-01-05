@@ -6,14 +6,12 @@ find_package (Eigen3 3.3 REQUIRED NO_MODULE)
 add_executable (${PROJECT_NAME}
                 src/main.cpp
                 src/tropical.cpp
-                src/method.cpp
                 src/ahp_decision_method.cpp
                 src/gm_decision_method.cpp
                 src/decision_method.cpp
                 src/tropical_decision_method.cpp
                 src/heuristic_decision_method.cpp
-                src/decision.cpp
-                include/max_algebra.h )
+        include/max_algebra.h )
 target_link_libraries (${PROJECT_NAME} Eigen3::Eigen)
 
 
@@ -33,10 +31,8 @@ add_executable(
         test_tropical
         include/max_algebra.h
         src/tropical.cpp
-        src/method.cpp
         src/decision_method.cpp
         src/tropical_decision_method.cpp
-        src/decision.cpp
 
         tests/tropical_tests.cpp
         tests/tropical_tasks_tests.cpp
@@ -46,14 +42,12 @@ add_executable(test_ahp
         src/ahp_decision_method.cpp
         src/decision_method.cpp
         src/heuristic_decision_method.cpp
-        src/decision.cpp
         tests/ahp_tasks_tests.cpp
         )
 add_executable(test_gm
         src/gm_decision_method.cpp
         src/decision_method.cpp
         src/heuristic_decision_method.cpp
-        src/decision.cpp
         tests/gm_tasks_tests.cpp)
 
 target_link_libraries(test_tropical gtest_main Eigen3::Eigen)

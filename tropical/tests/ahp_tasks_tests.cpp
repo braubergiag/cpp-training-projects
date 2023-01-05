@@ -48,12 +48,12 @@ TEST(AHPModule,AHP_Task_1) {
     ASSERT_NEAR(actual_main_eigen_vector.norm(),main_eigen_vector.norm(),eps);
 
 
-    ahp_model.perform_advanced();
+    ahp_model.perform();
 
     Eigen::MatrixXd final_weights(1,3);
     final_weights <<  0.43211 , 0.342146 ,0.225744 ;
 
-    ASSERT_NEAR(ahp_model.get_weight_vector().norm(), final_weights.norm(), eps);
+    ASSERT_NEAR(ahp_model.get_weight_vector(Eigen::VectorXcd(), 0).norm(), final_weights.norm(), eps);
 
 
 
@@ -100,12 +100,12 @@ TEST(AHPModule, AHP_Task_5_1) {
     ahp_decision_method ahp_model({A1,A2,A3,A4,A5,A6},C);
     double eps = 0.01;
 
-    ahp_model.perform_advanced();
+    ahp_model.perform();
 
     Eigen::MatrixXd final_weights(1,3);
     final_weights <<  0.3843 ,0.3516 ,0.2641;
 
-    ASSERT_NEAR(ahp_model.get_weight_vector().norm(), final_weights.norm(), eps);
+    ASSERT_NEAR(ahp_model.get_weight_vector(Eigen::VectorXcd(), 0).norm(), final_weights.norm(), eps);
 
 
 

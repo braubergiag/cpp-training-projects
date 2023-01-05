@@ -40,6 +40,9 @@ void gm_decision_method::perform() const {
     });
 
 
+
+
+
     for (int i = 0; i < criter_num; ++i){
         for (int j = 0; j < alter_num; ++j) {
             matrix_powers(j,i) = pow(matrix_weights(j,i),crit_vector(i));

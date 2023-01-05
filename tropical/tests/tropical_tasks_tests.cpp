@@ -2,7 +2,7 @@
 #include <Eigen/Dense>
 #include "../include/max_algebra.h"
 #include "../include/tropical.h"
-#include "../include/method.h"
+#include "../include/tropical_decision_method.h"
 
 TEST(TropicalModule,TropicalTask_5_1) {
         //5.1. Решение задачи о выборе места работы"
@@ -40,8 +40,8 @@ TEST(TropicalModule,TropicalTask_5_1) {
     double lambda = spectral_radius(C);
     double lambda_actual = 1.8612;
     ASSERT_NEAR(lambda,lambda_actual,epsilon);
-
-    MaxAlgMatrixXd D = construction_generating_matrix_optimal_weights(C,lambda);
+    tropical_decision_method method({A1,A2,A3,A4,A5,A6},C);
+    MaxAlgMatrixXd D = method.construction_generating_matrix_optimal_weights(C,lambda);
     MaxAlgMatrixXd D_calc(D.rows(),D.cols());
     D_calc <<
             1,              0.537285,   0.57735 ,   2.14914 ,   0.930605,   0.5,
@@ -54,18 +54,18 @@ TEST(TropicalModule,TropicalTask_5_1) {
     ASSERT_NEAR(D.norm().scalar,D_calc.norm().scalar, epsilon);
 
 
-    int l_ = get_best_differentiating_weight_vector_index(D);
+    int l_ = method.get_best_differentiating_weight_vector_index(D);
     int l_actual = 0;
     ASSERT_EQ(l_,l_actual);
 
 
-    MaxAlgMatrixXd v = get_best_differentiating_weight_vector(D, l_);;
+    MaxAlgMatrixXd v = method.get_best_differentiating_weight_vector(D, l_);;
     MaxAlgMatrixXd v_actual(v.rows(),v.cols());
     v_actual << 0.930605,0.930605,0.866025,0.179095,0.537285,1;
 
     ASSERT_NEAR(v.norm().scalar, v_actual.norm().scalar,epsilon);
 
-    MaxAlgMatrixXd w = get_worst_differentiating_weight_vector(D);
+    MaxAlgMatrixXd w = method.get_worst_differentiating_weight_vector(D);
     MaxAlgMatrixXd w_actual(w.rows(),w.cols());
     w_actual << 0.930605, 0.930605, 0.866025, 0.322371, 0.537285 ,1;
     ASSERT_NEAR(w.norm().scalar, w_actual.norm().scalar,epsilon);
@@ -73,7 +73,7 @@ TEST(TropicalModule,TropicalTask_5_1) {
 
     // 2.1
     std::vector<MaxAlgMatrixXd> Alternatives {A1,A2,A3,A4,A5,A6};
-    MaxAlgMatrixXd P = computing_weighted_sum_pairwise_comparison_matrices(Alternatives,v);
+    MaxAlgMatrixXd P = method.computing_weighted_sum_pairwise_comparison_matrices(Alternatives,v);
     MaxAlgMatrixXd P_actual(P.rows(),P.cols());
     P_actual << 1,         7,       9,
                 3.72242,   1,       5,
@@ -82,7 +82,7 @@ TEST(TropicalModule,TropicalTask_5_1) {
 
 
     // 2.2
-    MaxAlgMatrixXd Q = build_generating_matrix_optimal_ratings_alternatives(P);
+    MaxAlgMatrixXd Q = method.build_generating_matrix_optimal_ratings_alternatives(P);
     MaxAlgMatrixXd Q_actual(Q.rows(),Q.cols());
     Q_actual <<         1,          1.08171,    1.39076,
                         0.575223,   1,          0.8,
@@ -91,14 +91,14 @@ TEST(TropicalModule,TropicalTask_5_1) {
 
 
     // 2.3
-    MaxAlgMatrixXd X = calc_best_differentiating_vector_ratings_alternatives(D, Q, l_);
+    MaxAlgMatrixXd X = method.calc_best_differentiating_vector_ratings_alternatives(D, Q, l_);
     MaxAlgMatrixXd X_actual(X.rows(),X.cols());
     X_actual << 1, 0.575223, 0.719029;
     ASSERT_NEAR(X.norm().scalar, X_actual.norm().scalar,epsilon);
 
     // 3
     // 3.1
-    MaxAlgMatrixXd R = computing_weighted_sum_pairwise_comparison_matrices(Alternatives,w);
+    MaxAlgMatrixXd R = method.computing_weighted_sum_pairwise_comparison_matrices(Alternatives,w);
     MaxAlgMatrixXd R_actual(R.rows(),R.cols());
     R_actual <<     1,              7,         9,
                     3.72242,        1,         5,
@@ -107,7 +107,7 @@ TEST(TropicalModule,TropicalTask_5_1) {
 
 
     // 3.2
-    MaxAlgMatrixXd S = build_generating_matrix_optimal_ratings_alternatives(R);
+    MaxAlgMatrixXd S = method.build_generating_matrix_optimal_ratings_alternatives(R);
     MaxAlgMatrixXd S_actual(S.rows(), S.cols());
     S_actual <<     1,          1.08171,    1.39076,
                     0.575223,   1,          0.8,
@@ -116,7 +116,7 @@ TEST(TropicalModule,TropicalTask_5_1) {
 
 
     // 3.3
-    MaxAlgMatrixXd y = calc_worst_differentiating_vector_ratings_alternatives(S);
+    MaxAlgMatrixXd y = method.calc_worst_differentiating_vector_ratings_alternatives(S);
     MaxAlgMatrixXd y_actual(y.rows(),y.cols());
     y_actual << 1,  0.924466,   0.719029;
     ASSERT_NEAR(y.norm().scalar, y_actual.norm().scalar,epsilon);
@@ -161,8 +161,8 @@ TEST(TropicalModule,TropicalTask_5_2){
     double lambda = spectral_radius(C);
     double lambda_actual = 1.59231;
     ASSERT_NEAR(lambda,lambda_actual,epsilon);
-
-    MaxAlgMatrixXd D = construction_generating_matrix_optimal_weights(C,lambda);
+    tropical_decision_method method({A1,A2,A3,A4,A5},C);
+    MaxAlgMatrixXd D = method.construction_generating_matrix_optimal_weights(C,lambda);
     MaxAlgMatrixXd D_calc(D.rows(),D.cols());
     D_calc <<
            1,  0.318463,   1.88405,  0.318463,   3.54965,
@@ -174,18 +174,18 @@ TEST(TropicalModule,TropicalTask_5_2){
     ASSERT_NEAR(D.norm().scalar,D_calc.norm().scalar, epsilon);
 
 
-    int l_ = get_best_differentiating_weight_vector_index(D);
+    int l_ = method.get_best_differentiating_weight_vector_index(D);
     int l_actual = 0;
     ASSERT_EQ(l_,l_actual);
 
 
-    MaxAlgMatrixXd v = get_best_differentiating_weight_vector(D, l_);;
+    MaxAlgMatrixXd v = method.get_best_differentiating_weight_vector(D, l_);;
     MaxAlgMatrixXd v_actual(v.rows(),v.cols());
     v_actual <<  0.318463,1, 0.169031 , 0.628017, 0.0897167;
 
     ASSERT_NEAR(v.norm().scalar, v_actual.norm().scalar,epsilon);
 
-    MaxAlgMatrixXd w = get_worst_differentiating_weight_vector(D);
+    MaxAlgMatrixXd w = method.get_worst_differentiating_weight_vector(D);
     MaxAlgMatrixXd w_actual(w.rows(),w.cols());
     w_actual << 0.318463,         1,  0.169031,         1, 0.0897167;
     ASSERT_NEAR(w.norm().scalar, w_actual.norm().scalar,epsilon);
@@ -193,7 +193,7 @@ TEST(TropicalModule,TropicalTask_5_2){
 
     // 2.1
     std::vector<MaxAlgMatrixXd> Alternatives {A1,A2,A3,A4,A5};
-    MaxAlgMatrixXd P = computing_weighted_sum_pairwise_comparison_matrices(Alternatives,v);
+    MaxAlgMatrixXd P = method.computing_weighted_sum_pairwise_comparison_matrices(Alternatives,v);
     MaxAlgMatrixXd P_actual(P.rows(),P.cols());
     P_actual << 1,        2,        1.88405 ,        4,
                 1.25603,  1,        3.7681,          5.02414,
@@ -203,7 +203,7 @@ TEST(TropicalModule,TropicalTask_5_2){
 
 
     // 2.2
-    MaxAlgMatrixXd Q = build_generating_matrix_optimal_ratings_alternatives(P);
+    MaxAlgMatrixXd Q = method.build_generating_matrix_optimal_ratings_alternatives(P);
     MaxAlgMatrixXd Q_actual(Q.rows(),Q.cols());
     Q_actual << 1,          0.5,        0.343152,       0.72854,
                 0.375,      1,          0.686304,       1.125,
@@ -213,14 +213,14 @@ TEST(TropicalModule,TropicalTask_5_2){
 
 
     // 2.3
-    MaxAlgMatrixXd X = calc_best_differentiating_vector_ratings_alternatives(D, Q, l_);
+    MaxAlgMatrixXd X = method.calc_best_differentiating_vector_ratings_alternatives(D, Q, l_);
     MaxAlgMatrixXd X_actual(X.rows(),X.cols());
     X_actual << 1, 0.375,   0.546405,   0.116006;
     ASSERT_NEAR(X.norm().scalar, X_actual.norm().scalar,epsilon);
 
     // 3
     // 3.1
-    MaxAlgMatrixXd R = computing_weighted_sum_pairwise_comparison_matrices(Alternatives,w);
+    MaxAlgMatrixXd R = method.computing_weighted_sum_pairwise_comparison_matrices(Alternatives,w);
     MaxAlgMatrixXd R_actual(R.rows(),R.cols());
     R_actual <<         1,        2,                3,        4,
                         2,        1,                6,        8,
@@ -230,7 +230,7 @@ TEST(TropicalModule,TropicalTask_5_2){
 
 
     // 3.2
-    MaxAlgMatrixXd S = build_generating_matrix_optimal_ratings_alternatives(R);
+    MaxAlgMatrixXd S = method.build_generating_matrix_optimal_ratings_alternatives(R);
     MaxAlgMatrixXd S_actual(S.rows(), S.cols());
     S_actual <<             1,          0.5,        0.433013,   0.57735,
                             0.375,      1,          0.866025,    1.1547,
@@ -240,7 +240,7 @@ TEST(TropicalModule,TropicalTask_5_2){
 
 
     // 3.3
-    MaxAlgMatrixXd y = calc_worst_differentiating_vector_ratings_alternatives(S);
+    MaxAlgMatrixXd y = method.calc_worst_differentiating_vector_ratings_alternatives(S);
     MaxAlgMatrixXd y_actual(y.rows(),y.cols());
     y_actual <<        1,   0.866025,  1,   0.75;
     ASSERT_NEAR(y.norm().scalar, y_actual.norm().scalar,epsilon);
