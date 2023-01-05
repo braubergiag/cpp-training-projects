@@ -16,7 +16,7 @@ class ahp_decision_method : public heuristic_decision_method {
 
 public:
     ahp_decision_method(const std::vector<Eigen::MatrixXd> &alternatives, const MatrixXd &criteria);
-    void perform() const override;
+    void perform() override;
 
 
 

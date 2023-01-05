@@ -20,8 +20,12 @@ public:
 
     int get_criteria_count() const;
     int get_alternatives_count() const;
+    const Eigen::VectorXd &get_final_weights() const;
+
 
     void set_criteria(const Eigen::MatrixXd &criteria);
+    void set_final_weights(const Eigen::VectorXd &final_weights);
+
     void set_alternatives(const std::vector<Eigen::MatrixXd> &alternatives);
 
 
@@ -30,6 +34,7 @@ public:
 
 private:
     std::vector<Eigen::MatrixXd>  alternatives_;
+    Eigen::VectorXd final_weights_;
     Eigen::MatrixXd criteria_;
 
 };

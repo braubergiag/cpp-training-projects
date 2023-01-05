@@ -1,18 +1,13 @@
-//
-// Created by igor on 26.12.22.
-//
-
 #include "../include/gm_decision_method.h"
 
 using Eigen::MatrixXd;
 using Eigen::VectorXd;
-#include <iostream>
 #include <algorithm>
 gm_decision_method::gm_decision_method(const std::vector<Eigen::MatrixXd> &alternatives,
                                        const Eigen::MatrixXd &criteria) : heuristic_decision_method(alternatives,
                                                                                                     criteria) {}
 
-void gm_decision_method::perform() const {
+void gm_decision_method::perform() {
     const int alter_num = get_alternatives_count();
     const int criter_num = get_criteria_count();
     MatrixXd    matrix_weights(alter_num,criter_num),
@@ -57,12 +52,12 @@ void gm_decision_method::perform() const {
 
     double final_vector_sum = final_weights.maxCoeff();
     std::transform(final_weights.begin(), final_weights.end(),final_weights.begin(),
-                   [final_vector_sum](const auto & w){
+                   [final_vector_sum](auto & w){
                        return w / final_vector_sum;
                    });
 
 
-    std::cout << final_weights;
-//    Decision d(matrix_weights,final_weights);
-//    return d;
+    set_final_weights(final_weights);
+
+
 }

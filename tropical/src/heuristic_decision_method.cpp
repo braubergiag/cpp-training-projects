@@ -31,3 +31,11 @@ int heuristic_decision_method::get_criteria_count() const {
 int heuristic_decision_method::get_alternatives_count() const {
     return alternatives_.at(0).rows();
 }
+
+const Eigen::VectorXd &heuristic_decision_method::get_final_weights() const {
+    return final_weights_;
+}
+
+void heuristic_decision_method::set_final_weights(const Eigen::VectorXd &final_weights) {
+    final_weights_ = final_weights;
+}

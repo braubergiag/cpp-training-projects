@@ -6,10 +6,12 @@
 #define TROPICAL_IDECISIONMETHOD_H
 
 
+#include <Eigen/Core>
+
 class decision_method {
 
 public:
-    virtual void perform() const = 0;
+    virtual void perform()  = 0;
 };
 
 
